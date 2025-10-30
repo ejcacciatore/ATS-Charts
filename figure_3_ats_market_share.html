@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 3: ATS Market Share by Innovation Tier</title>
+    <style>
+        body {
+            font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+            font-size: 11pt;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        
+        .figure-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .figure-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .figure-label {
+            font-weight: bold;
+            font-size: 12pt;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        
+        .figure-caption {
+            font-size: 10pt;
+            color: #555;
+            text-align: left;
+            margin-top: 10px;
+            line-height: 1.6;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #3498db;
+        }
+        
+        .key-findings {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff9e6;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .key-findings h3 {
+            margin-top: 0;
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .finding-item {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        
+        .finding-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .tier-colors {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .tier-color-item {
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .color-box {
+            width: 60px;
+            height: 30px;
+            margin: 0 auto 8px auto;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .tier-1 { background-color: #3498db; }
+        .tier-2 { background-color: #9b59b6; }
+        .tier-3 { background-color: #e67e22; }
+        .tier-4 { background-color: #c0392b; }
+        
+        .tier-label {
+            font-size: 9pt;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .tier-description {
+            font-size: 8pt;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="figure-container">
+        <img src="ats_market_share_by_tier.png" alt="ATS Market Share by Innovation Tier" class="figure-image">
+        
+        <div class="figure-label">
+            Figure 3: Institutional ATS Market Share by Innovation Tier (July-September 2025)
+        </div>
+        
+        <div class="figure-caption">
+            Color-coded market share distribution across all 33 registered ATSs, showing concentration of volume in Tier 1 structural innovators (blue), Tier 2 sophisticated segmentation (purple), Tier 3 standard segmentation (orange), and Tier 4 minimal differentiation (red). Top 5 venues capture 51.4% of market share, while 28 venues compete for the remaining 48.6%. Data represents 63.7 billion shares analyzed during July 29 - September 15, 2025. Source: Transaction-level ATS data analysis; FINRA ATS reporting.
+        </div>
+    </div>
+    
+    <div class="tier-colors">
+        <div class="tier-color-item">
+            <div class="color-box tier-1"></div>
+            <div class="tier-label">Tier 1</div>
+            <div class="tier-description">Structural Innovation<br>(31.4%)</div>
+        </div>
+        <div class="tier-color-item">
+            <div class="color-box tier-2"></div>
+            <div class="tier-label">Tier 2</div>
+            <div class="tier-description">Sophisticated Segmentation<br>(42.3%)</div>
+        </div>
+        <div class="tier-color-item">
+            <div class="color-box tier-3"></div>
+            <div class="tier-label">Tier 3</div>
+            <div class="tier-description">Standard Segmentation<br>(14.7%)</div>
+        </div>
+        <div class="tier-color-item">
+            <div class="color-box tier-4"></div>
+            <div class="tier-label">Tier 4</div>
+            <div class="tier-description">Minimal Differentiation<br>(11.6%)</div>
+        </div>
+    </div>
+    
+    <div class="key-findings">
+        <h3>Key Findings</h3>
+        
+        <div class="finding-item">
+            <span class="finding-label">Market Concentration:</span> Top 5 venues capture 51.4% of total volume (IntelligentCross 16.1%, UBS ATS 13.0%, Sigma X2 8.6%, Level ATS 7.6%, Instinct X 6.1%), while remaining 28 venues compete for 48.6%.
+        </div>
+        
+        <div class="finding-item">
+            <span class="finding-label">Innovation Premium:</span> Structural innovation (Tier 1) commands 31.4% of market volume despite representing only 9 venues, suggesting market preference for genuinely differentiated matching protocols.
+        </div>
+        
+        <div class="finding-item">
+            <span class="finding-label">Segmentation Dominance:</span> Tier 2 sophisticated segmentation venues control 42.3% of volume, the largest share among all tiers, indicating institutions value quantitatively-measured adverse selection protection over pure structural innovation.
+        </div>
+        
+        <div class="finding-item">
+            <span class="finding-label">Long Tail Challenge:</span> Combined Tiers 3+4 represent only 26.3% of volume across 16 venues, validating the fragmentation and transparency gap thesis—these venues struggle to differentiate and capture meaningful market share.
+        </div>
+        
+        <div class="finding-item">
+            <span class="finding-label">Competitive Dynamics:</span> Unlike exchange markets with winner-take-all characteristics, ATS competition remains distributed—no single venue exceeds 20% market share, suggesting ongoing value from venue diversity despite concentration trends.
+        </div>
+    </div>
+    
+    <div style="margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-left: 3px solid #95a5a6; font-size: 9pt; color: #666;">
+        <strong>Methodology Notes:</strong> Venues classified based on operational structure, matching methodology, and degree of innovation beyond standard continuous midpoint engines. Classifications validated against Form ATS-N disclosures and confirmed operational characteristics. Data period: July 29 - September 15, 2025 (7 weeks). Total volume analyzed: 63.7 billion shares across 33 active NMS Stock ATSs.
+    </div>
+</body>
+</html>

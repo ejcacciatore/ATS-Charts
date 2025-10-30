@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Venue Distribution by Ticker</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+        #chart {
+            width: 100%;
+            height: 600px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 13px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            #chart {
+                height: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ATS Venue Shares Volume Mix (%)</h1>
+        <div class="subtitle">Distribution across top 10 tickers by trading volume</div>
+        <div id="chart"></div>
+        <div class="footer">
+            Interactive chart: Hover for details • Click legend to show/hide venues • Export options available
+        </div>
+    </div>
+    
+    <script>
+        // Data from your Colab analysis
+        const tickers = ["NVDA", "OPEN", "INTC", "WBD", "SPY", "NU", "NIO", "TSLA", "SNAP", "SOXS"];
+        const seriesData = [{"name": "ALPX", "data": [0.37, 0.13, 0.23, 0.21, 0.04, 0.26, 0.12, 0.1, 0.31, 0.06]}, {"name": "BIDS", "data": [6.65, 3.04, 6.21, 9.27, 1.85, 10.16, 2.19, 1.65, 6.99, 10.49]}, {"name": "BLKX", "data": [0.2, 0.26, 0.3, 1.09, 0.03, 0.91, 0.24, 0.06, 0.73, 0.0]}, {"name": "BLUE", "data": [3.12, 1.65, 2.49, 0.11, 0.26, 0.12, 5.39, 3.79, 0.8, 6.58]}, {"name": "BNPX", "data": [1.43, 0.79, 1.02, 0.95, 0.28, 0.54, 0.48, 1.44, 0.51, 0.46]}, {"name": "BOSS", "data": [0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.01, 0.0, 0.0]}, {"name": "CGXS", "data": [2.43, 0.87, 2.16, 2.82, 0.51, 2.67, 2.15, 1.54, 2.5, 0.97]}, {"name": "CODA", "data": [0.33, 0.57, 0.33, 0.2, 0.24, 0.08, 0.18, 0.95, 0.2, 0.47]}, {"name": "DLTA", "data": [0.0, 0.0, 0.0, 0.0, 55.66, 0.0, 0.0, 0.0, 0.0, 0.0]}, {"name": "EBXL", "data": [6.67, 6.42, 6.39, 7.52, 3.78, 8.12, 6.15, 5.97, 6.1, 4.14]}, {"name": "IATS", "data": [9.37, 16.2, 7.02, 1.11, 0.63, 1.55, 9.26, 19.25, 2.26, 14.26]}, {"name": "ICBX", "data": [1.43, 1.39, 0.95, 0.82, 0.45, 0.68, 0.49, 3.33, 0.63, 0.61]}, {"name": "IEOS", "data": [0.12, 0.12, 0.14, 0.01, 0.12, 0.01, 0.58, 0.13, 0.02, 0.38]}, {"name": "INCR", "data": [15.44, 19.52, 17.25, 13.47, 10.6, 14.45, 15.84, 11.77, 14.51, 25.49]}, {"name": "ITGP", "data": [1.99, 2.66, 1.61, 2.22, 0.38, 2.11, 0.91, 0.99, 1.29, 0.33]}, {"name": "JPBX", "data": [1.54, 0.29, 1.52, 2.52, 0.51, 2.4, 0.53, 0.65, 1.52, 0.0]}, {"name": "JPMX", "data": [3.24, 2.32, 2.07, 3.79, 2.42, 3.05, 2.32, 2.93, 2.64, 0.73]}, {"name": "KCGM", "data": [3.04, 3.82, 2.0, 2.1, 3.17, 2.11, 1.53, 3.8, 1.76, 3.37]}, {"name": "LATS", "data": [3.24, 5.29, 3.2, 3.07, 2.09, 3.01, 3.45, 3.19, 3.1, 4.65]}, {"name": "LMNX", "data": [0.07, 0.0, 0.0, 0.01, 0.0, 0.02, 0.0, 0.0, 0.06, 0.0]}, {"name": "LQNA", "data": [0.24, 0.0, 0.14, 0.57, 0.01, 0.27, 0.09, 0.13, 0.37, 0.0]}, {"name": "LQNT", "data": [0.09, 0.0, 0.0, 0.19, 0.0, 0.06, 0.0, 0.0, 0.02, 0.0]}, {"name": "MLIX", "data": [4.97, 7.41, 6.01, 4.37, 2.81, 5.11, 8.47, 4.46, 6.15, 10.4]}, {"name": "MOON", "data": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, {"name": "MSPL", "data": [0.0, 6.12, 4.08, 3.29, 0.0, 6.53, 6.83, 0.0, 5.95, 2.22]}, {"name": "MSRP", "data": [0.28, 0.06, 0.65, 1.16, 0.04, 0.85, 0.62, 0.11, 1.93, 0.0]}, {"name": "MSTX", "data": [2.58, 0.88, 5.02, 7.07, 0.7, 6.78, 3.01, 1.21, 8.34, 0.03]}, {"name": "ONEC", "data": [0.53, 1.06, 0.65, 0.88, 0.24, 0.85, 0.77, 0.78, 0.87, 0.73]}, {"name": "PURE", "data": [3.68, 0.71, 3.23, 4.46, 0.55, 6.17, 3.2, 2.43, 6.09, 0.16]}, {"name": "SGMT", "data": [7.71, 3.82, 6.44, 6.8, 3.42, 7.73, 6.17, 8.26, 6.18, 3.24]}, {"name": "STFX", "data": [0.01, 0.0, 0.04, 0.03, 0.0, 0.07, 0.0, 0.0, 0.08, 0.0]}, {"name": "UBSA", "data": [12.25, 10.6, 11.94, 10.52, 9.02, 9.9, 14.29, 15.76, 9.79, 9.97]}, {"name": "XSTM", "data": [6.98, 3.98, 6.91, 9.35, 0.17, 3.44, 4.74, 5.31, 8.27, 0.28]}];
+        
+        // Create the interactive chart
+        Highcharts.chart('chart', {
+            chart: {
+                type: 'bar',
+                backgroundColor: 'transparent',
+                style: {
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                }
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                categories: tickers,
+                title: {
+                    text: 'Ticker Symbol',
+                    style: { fontSize: '14px', fontWeight: '600' }
+                },
+                labels: {
+                    style: { fontSize: '13px', fontWeight: '500' }
+                }
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: 'Percentage of Ticker Volume (%)',
+                    style: { fontSize: '14px', fontWeight: '600' }
+                },
+                labels: {
+                    format: '{value}%'
+                },
+                stackLabels: {
+                    enabled: false
+                }
+            },
+            legend: {
+                align: 'right',
+                verticalAlign: 'middle',
+                layout: 'vertical',
+                itemStyle: {
+                    fontSize: '12px'
+                },
+                itemHoverStyle: {
+                    fontWeight: '600'
+                },
+                maxHeight: 500
+            },
+            tooltip: {
+                shared: false,
+                useHTML: true,
+                backgroundColor: '#333',
+                borderColor: '#333',
+                style: {
+                    color: '#fff',
+                    fontSize: '13px'
+                },
+                formatter: function() {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                           'Ticker: <b>' + this.x + '</b><br/>' +
+                           'Volume Share: <b>' + this.y.toFixed(1) + '%</b>';
+                }
+            },
+            plotOptions: {
+                bar: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    borderWidth: 0,
+                    groupPadding: 0.1
+                },
+                series: {
+                    animation: {
+                        duration: 800
+                    },
+                    states: {
+                        hover: {
+                            brightness: 0.1
+                        }
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            exporting: {
+                enabled: true,
+                buttons: {
+                    contextButton: {
+                        menuItems: ['viewFullscreen', 'separator', 
+                                    'downloadPNG', 'downloadSVG', 'downloadPDF']
+                    }
+                }
+            },
+            series: seriesData,
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 768
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        chart: {
+                            height: 900
+                        }
+                    }
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

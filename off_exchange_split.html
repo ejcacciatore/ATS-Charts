@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Off-Exchange Flow Bifurcation</title>
+<style>
+  :root {
+    --navy: #1F4E78;
+    --slate: #2f3a45;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f7f9fc;
+    --white: #ffffff;
+  }
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    background: var(--bg);
+    font-family: Calibri, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--slate);
+  }
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    padding: 28px;
+  }
+  h1 {
+    margin: 0 0 6px 0;
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    text-align: center;
+    font-size: 28px;
+    color: var(--navy);
+    letter-spacing: .2px;
+  }
+  p.subtitle {
+    text-align: center;
+    margin: 0 0 22px 0;
+    font-style: italic;
+    color: var(--muted);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  thead th {
+    background: #eff4fa;
+    color: var(--navy);
+    text-align: left;
+    padding: 14px 12px;
+    font-weight: 700;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 14px 12px;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:hover {
+    background: #fafcff;
+  }
+  .kpi {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 18px 0 0;
+  }
+  .kpi .tile {
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: #fbfdff;
+  }
+  .kpi .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .6px;
+  }
+  .kpi .value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--slate);
+  }
+  .foot {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Off-Exchange Flow Bifurcation</h1>
+      <p class="subtitle">Institutional dark pools vs. retail wholesalers</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th>Monthly Volume (Shares B)</th>
+            <th>Share of Off-Exchange</th>
+            <th>Share of Total Market</th>
+            <th>Competitive Focus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Institutional ATSs</td>
+            <td>63.7</td>
+            <td>32.5&nbsp;%</td>
+            <td>16.6&nbsp;%</td>
+            <td>Matching precision, timing determinism, adverse‑selection control</td>
+          </tr>
+          <tr>
+            <td>Retail Wholesalers</td>
+            <td>132.0</td>
+            <td>67.5&nbsp;%</td>
+            <td>34.4&nbsp;%</td>
+            <td>Price improvement, internalization efficiency on small‑lot flow</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="kpi">
+        <div class="tile">
+          <div class="label">Off-Exchange Share</div>
+          <div class="value">51&nbsp;%</div>
+        </div>
+        <div class="tile">
+          <div class="label">Institutional Share of Off-Exchange</div>
+          <div class="value">32.5&nbsp;%</div>
+        </div>
+        <div class="tile">
+          <div class="label">Retail Share of Off-Exchange</div>
+          <div class="value">67.5&nbsp;%</div>
+        </div>
+      </div>
+
+      <div class="foot">Source: September&nbsp;2025 market landscape analysis</div>
+    </div>
+  </div>
+</body>
+</html>
