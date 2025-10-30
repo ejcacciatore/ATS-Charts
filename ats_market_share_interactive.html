@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutional ATS Market Share by Innovation Tier - Q1+Q2 2025</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        #chart {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1600px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .legend-info {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .stats {
+            text-align: center;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .stats h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .stat-box {
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .tier1-box { border-color: #2E86DE; }
+        .tier2-box { border-color: #8E44AD; }
+        .tier3-box { border-color: #3498DB; }
+        .tier4-box { border-color: #E74C3C; }
+    </style>
+</head>
+<body>
+    <div id="chart">
+        <h1>Institutional ATS Market Share by Innovation Tier</h1>
+        <div class="subtitle">Q1 + Q2 2025 Combined (265.8B shares analyzed)</div>
+        <div id="plotly-chart"></div>
+        <div class="legend-info">
+            Interactive chart: Hover for details • Click legend to toggle tiers • Double-click to isolate
+        </div>
+        <div class="stats">
+            <h3>Market Share by Innovation Tier</h3>
+            <div class="stat-grid">
+                <div class="stat-box tier1-box">
+                    <strong>Tier 1: Structural Innovation</strong><br>
+                    <span style="font-size: 24px; color: #2E86DE;">33.4%</span>
+                </div>
+                <div class="stat-box tier2-box">
+                    <strong>Tier 2: Sophisticated Segmentation</strong><br>
+                    <span style="font-size: 24px; color: #8E44AD;">46.2%</span>
+                </div>
+                <div class="stat-box tier3-box">
+                    <strong>Tier 3: Standard Segmentation</strong><br>
+                    <span style="font-size: 24px; color: #3498DB;">10.3%</span>
+                </div>
+                <div class="stat-box tier4-box">
+                    <strong>Tier 4: Minimal Differentiation</strong><br>
+                    <span style="font-size: 24px; color: #E74C3C;">10.2%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data will be inserted here
+        const rawData = {
+        "data": [
+                {
+                        "mp_id": "INCR",
+                        "ATS Name": "INTELLIGENT CROSS LLC",
+                        "Tier1_Shares": 24281263002,
+                        "Tier2_Shares": 20944805806,
+                        "Total_Shares": 45226068808,
+                        "Market_Share": 17.01430100961773,
+                        "Tier1_Pct": 9.134747469730206,
+                        "Tier2_Pct": 7.879553539887523,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "UBSA",
+                        "ATS Name": "UBS ATS",
+                        "Tier1_Shares": 21639141179,
+                        "Tier2_Shares": 17751830483,
+                        "Total_Shares": 39390971662,
+                        "Market_Share": 14.819104701844815,
+                        "Tier1_Pct": 8.140766405591151,
+                        "Tier2_Pct": 6.6783382962536635,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "SGMT",
+                        "ATS Name": "SIGMA X2",
+                        "Tier1_Shares": 14221110894,
+                        "Tier2_Shares": 11016575339,
+                        "Total_Shares": 25237686233,
+                        "Market_Share": 9.494559259118954,
+                        "Tier1_Pct": 5.350061763468361,
+                        "Tier2_Pct": 4.144497495650595,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "EBXL",
+                        "ATS Name": "LEVEL ATS",
+                        "Tier1_Shares": 11277602679,
+                        "Tier2_Shares": 8431837118,
+                        "Total_Shares": 19709439797,
+                        "Market_Share": 7.4148019112768555,
+                        "Tier1_Pct": 4.242697446509782,
+                        "Tier2_Pct": 3.172104464767073,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "MSPL",
+                        "ATS Name": "MS POOL (ATS-4)",
+                        "Tier1_Shares": 8487474024,
+                        "Tier2_Shares": 8717713890,
+                        "Total_Shares": 17205187914,
+                        "Market_Share": 6.472688292643544,
+                        "Tier1_Pct": 3.1930353811804926,
+                        "Tier2_Pct": 3.2796529114630517,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "MLIX",
+                        "ATS Name": "INSTINCT X",
+                        "Tier1_Shares": 9217419641,
+                        "Tier2_Shares": 7882809288,
+                        "Total_Shares": 17100228929,
+                        "Market_Share": 6.43320213318902,
+                        "Tier1_Pct": 3.467645020612436,
+                        "Tier2_Pct": 2.9655571125765845,
+                        "Innovation_Tier": "Tier 4: Minimal Differentiation"
+                },
+                {
+                        "mp_id": "MSTX",
+                        "ATS Name": "MS TRAJECTORY CROSS (ATS-1)",
+                        "Tier1_Shares": 8340017461,
+                        "Tier2_Shares": 6402233010,
+                        "Total_Shares": 14742250471,
+                        "Market_Share": 5.546117398300243,
+                        "Tier1_Pct": 3.13756139427757,
+                        "Tier2_Pct": 2.4085560040226732,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "PURE",
+                        "ATS Name": "PURESTREAM",
+                        "Tier1_Shares": 6036185750,
+                        "Tier2_Shares": 4023405051,
+                        "Total_Shares": 10059590801,
+                        "Market_Share": 3.78447453941696,
+                        "Tier1_Pct": 2.2708469696198397,
+                        "Tier2_Pct": 1.5136275697971202,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "JPMX",
+                        "ATS Name": "JPM-X",
+                        "Tier1_Shares": 5695920410,
+                        "Tier2_Shares": 4045127851,
+                        "Total_Shares": 9741048261,
+                        "Market_Share": 3.664637047395776,
+                        "Tier1_Pct": 2.142837238274898,
+                        "Tier2_Pct": 1.521799809120878,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "LATS",
+                        "ATS Name": "THE BARCLAYS ATS",
+                        "Tier1_Shares": 5009683663,
+                        "Tier2_Shares": 3960299082,
+                        "Total_Shares": 8969982745,
+                        "Market_Share": 3.374557871090283,
+                        "Tier1_Pct": 1.8846711211426135,
+                        "Tier2_Pct": 1.4898867499476691,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "CGXS",
+                        "ATS Name": "ONECHRONOS",
+                        "Tier1_Shares": 3902254016,
+                        "Tier2_Shares": 2967852401,
+                        "Total_Shares": 6870106417,
+                        "Market_Share": 2.584572606634954,
+                        "Tier1_Pct": 1.4680498702215135,
+                        "Tier2_Pct": 1.1165227364134405,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "BIDS",
+                        "ATS Name": "BIDS ATS",
+                        "Tier1_Shares": 4033027108,
+                        "Tier2_Shares": 2813451983,
+                        "Total_Shares": 6846479091,
+                        "Market_Share": 2.5756838739369385,
+                        "Tier1_Pct": 1.5172474416640451,
+                        "Tier2_Pct": 1.0584364322728932,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "KCGM",
+                        "ATS Name": "VIRTU MATCHIT ATS",
+                        "Tier1_Shares": 2970458163,
+                        "Tier2_Shares": 3073449449,
+                        "Total_Shares": 6043907612,
+                        "Market_Share": 2.2737519774590242,
+                        "Tier1_Pct": 1.1175030387080227,
+                        "Tier2_Pct": 1.156248938751001,
+                        "Innovation_Tier": "Tier 4: Minimal Differentiation"
+                },
+                {
+                        "mp_id": "IATS",
+                        "ATS Name": "IBKR ATS",
+                        "Tier1_Shares": 2214663275,
+                        "Tier2_Shares": 3705713989,
+                        "Total_Shares": 5920377264,
+                        "Market_Share": 2.2272791669740446,
+                        "Tier1_Pct": 0.8331687583938416,
+                        "Tier2_Pct": 1.3941104085802027,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "JPBX",
+                        "ATS Name": "JPB-X",
+                        "Tier1_Shares": 3681280885,
+                        "Tier2_Shares": 2070433374,
+                        "Total_Shares": 5751714259,
+                        "Market_Share": 2.163827197526082,
+                        "Tier1_Pct": 1.3849185376745061,
+                        "Tier2_Pct": 0.778908659851576,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "ITGP",
+                        "ATS Name": "POSIT",
+                        "Tier1_Shares": 2598759319,
+                        "Tier2_Shares": 2255042179,
+                        "Total_Shares": 4853801498,
+                        "Market_Share": 1.826027375461323,
+                        "Tier1_Pct": 0.9776678466732851,
+                        "Tier2_Pct": 0.8483595287880381,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "ICBX",
+                        "ATS Name": "CBX",
+                        "Tier1_Shares": 1951236773,
+                        "Tier2_Shares": 1864994778,
+                        "Total_Shares": 3816231551,
+                        "Market_Share": 1.4356877359110378,
+                        "Tier1_Pct": 0.734066229320038,
+                        "Tier2_Pct": 0.7016215065910001,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "XSTM",
+                        "ATS Name": "CROSSSTREAM",
+                        "Tier1_Shares": 2020614571,
+                        "Tier2_Shares": 1612831960,
+                        "Total_Shares": 3633446531,
+                        "Market_Share": 1.366922985131309,
+                        "Tier1_Pct": 0.7601665464527897,
+                        "Tier2_Pct": 0.6067564386785191,
+                        "Innovation_Tier": "Tier 4: Minimal Differentiation"
+                },
+                {
+                        "mp_id": "ONEC",
+                        "ATS Name": "CITI-ONE ATS",
+                        "Tier1_Shares": 1289081005,
+                        "Tier2_Shares": 1071708557,
+                        "Total_Shares": 2360789562,
+                        "Market_Share": 0.8881422879966622,
+                        "Tier1_Pct": 0.48495951169142654,
+                        "Tier2_Pct": 0.40318277630523564,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "BLUE",
+                        "ATS Name": "BOATS",
+                        "Tier1_Shares": 634963761,
+                        "Tier2_Shares": 1551076439,
+                        "Total_Shares": 2186040200,
+                        "Market_Share": 0.822400596873141,
+                        "Tier1_Pct": 0.2388769319243143,
+                        "Tier2_Pct": 0.5835236649488267,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "BNPX",
+                        "ATS Name": "BNPP CORTEX ATS",
+                        "Tier1_Shares": 1253596834,
+                        "Tier2_Shares": 812253234,
+                        "Total_Shares": 2065850068,
+                        "Market_Share": 0.7771843944011728,
+                        "Tier1_Pct": 0.47161016733355576,
+                        "Tier2_Pct": 0.3055742270676171,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "MSRP",
+                        "ATS Name": "MS RPOOL (ATS-6)",
+                        "Tier1_Shares": 1005393340,
+                        "Tier2_Shares": 749372168,
+                        "Total_Shares": 1754765508,
+                        "Market_Share": 0.6601526363291949,
+                        "Tier1_Pct": 0.3782346193396996,
+                        "Tier2_Pct": 0.28191801698949526,
+                        "Innovation_Tier": "Tier 2: Sophisticated Segmentation"
+                },
+                {
+                        "mp_id": "LQNA",
+                        "ATS Name": "LIQUIDNET H2O ATS",
+                        "Tier1_Shares": 859899710,
+                        "Tier2_Shares": 725670902,
+                        "Total_Shares": 1585570612,
+                        "Market_Share": 0.5965005665007036,
+                        "Tier1_Pct": 0.32349909885236366,
+                        "Tier2_Pct": 0.27300146764833993,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "BLKX",
+                        "ATS Name": "INSTINET BLOCKCROSS",
+                        "Tier1_Shares": 841436715,
+                        "Tier2_Shares": 646507603,
+                        "Total_Shares": 1487944318,
+                        "Market_Share": 0.5597730065701438,
+                        "Tier1_Pct": 0.3165532164719455,
+                        "Tier2_Pct": 0.24321979009819839,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "DLTA",
+                        "ATS Name": "DEALERWEB",
+                        "Tier1_Shares": 1378235321,
+                        "Tier2_Shares": 10000,
+                        "Total_Shares": 1378245321,
+                        "Market_Share": 0.5185036279881833,
+                        "Tier1_Pct": 0.5184998659320378,
+                        "Tier2_Pct": 3.762056145505197e-06,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "LQNT",
+                        "ATS Name": "LIQUIDNET NEGOTIATION ATS",
+                        "Tier1_Shares": 280496700,
+                        "Tier2_Shares": 322873200,
+                        "Total_Shares": 603369900,
+                        "Market_Share": 0.2269911440307856,
+                        "Tier1_Pct": 0.10552443340289276,
+                        "Tier2_Pct": 0.12146671062789285,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "CODA",
+                        "ATS Name": "CODA",
+                        "Tier1_Shares": 193331978,
+                        "Tier2_Shares": 235198649,
+                        "Total_Shares": 428530627,
+                        "Market_Share": 0.16121562788425453,
+                        "Tier1_Pct": 0.07273257559575755,
+                        "Tier2_Pct": 0.08848305228849698,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "LMNX",
+                        "ATS Name": "LUMINEX ATS",
+                        "Tier1_Shares": 215254605,
+                        "Tier2_Shares": 94745675,
+                        "Total_Shares": 310000280,
+                        "Market_Share": 0.11662384584823317,
+                        "Tier1_Pct": 0.08097999095885437,
+                        "Tier2_Pct": 0.03564385488937881,
+                        "Innovation_Tier": "Tier 3: Standard Segmentation"
+                },
+                {
+                        "mp_id": "ALPX",
+                        "ATS Name": "ALPHAX US",
+                        "Tier1_Shares": 163746716,
+                        "Tier2_Shares": 121510889,
+                        "Total_Shares": 285257605,
+                        "Market_Share": 0.10731551259423439,
+                        "Tier1_Pct": 0.06160243392340941,
+                        "Tier2_Pct": 0.04571307867082498,
+                        "Innovation_Tier": "Tier 1: Structural Innovation"
+                },
+                {
+                        "mp_id": "IEOS",
+                        "ATS Name": "IBKR EOS ATS",
+                        "Tier1_Shares": 49350585,
+                        "Tier2_Shares": 128497723,
+                        "Total_Shares": 177848308,
+                        "Market_Share": 0.06690753200791011,
+                        "Tier1_Pct": 0.018565967158352657,
+                        "Tier2_Pct": 0.04834156484955745,
+                        "Innovation_Tier": "Tier 4: Minimal Differentiation"
+                },
+                {
+                        "mp_id": "STFX",
+                        "ATS Name": "STIFEL X",
+                        "Tier1_Shares": 41702382,
+                        "Tier2_Shares": 25392369,
+                        "Total_Shares": 67094751,
+                        "Market_Share": 0.025241422033069092,
+                        "Tier1_Pct": 0.015688670248530528,
+                        "Tier2_Pct": 0.009552751784538566,
+                        "Innovation_Tier": "Tier 4: Minimal Differentiation"
+                },
+                {
+                        "mp_id": "MOON",
+                        "ATS Name": "MOON ATS",
+                        "Tier1_Shares": 606254,
+                        "Tier2_Shares": 972561,
+                        "Total_Shares": 1578815,
+                        "Market_Share": 0.0005939590673365787,
+                        "Tier1_Pct": 0.00022807615864371076,
+                        "Tier2_Pct": 0.000365882908692868,
+                        "Innovation_Tier": "Tier 4: Minimal Differentiation"
+                },
+                {
+                        "mp_id": "BOSS",
+                        "ATS Name": "BRUCE ATS",
+                        "Tier1_Shares": 68087,
+                        "Tier2_Shares": 614404,
+                        "Total_Shares": 682491,
+                        "Market_Share": 0.00025675694608019874,
+                        "Tier1_Pct": 2.5614711677901234e-05,
+                        "Tier2_Pct": 0.0002311422344022975,
+                        "Innovation_Tier": "Tier 4: Minimal Differentiation"
+                }
+        ],
+        "total_shares": 265812088210.0,
+        "tier_totals": {
+                "Tier 1: Structural Innovation": 33.4,
+                "Tier 2: Sophisticated Segmentation": 46.2,
+                "Tier 3: Standard Segmentation": 10.3,
+                "Tier 4: Minimal Differentiation": 10.2
+        }
+};
+        
+        // Color mapping for innovation tiers
+        const tierColors = {
+            'Tier 1: Structural Innovation': '#2E86DE',
+            'Tier 2: Sophisticated Segmentation': '#8E44AD',
+            'Tier 3: Standard Segmentation': '#3498DB',
+            'Tier 4: Minimal Differentiation': '#E74C3C'
+        };
+
+        // Prepare data for Plotly
+        const venues = rawData.data.map(d => d.mp_id);
+        const atsNames = rawData.data.map(d => d['ATS Name']);
+        const tier1Pct = rawData.data.map(d => d.Tier1_Pct);
+        const tier2Pct = rawData.data.map(d => d.Tier2_Pct);
+        const totalPct = rawData.data.map(d => d.Market_Share);
+        const innovationTiers = rawData.data.map(d => d.Innovation_Tier);
+        const colors = rawData.data.map(d => tierColors[d.Innovation_Tier]);
+
+        // Tier 1 shares (bottom of stack)
+        const trace1 = {
+            x: tier1Pct,
+            y: venues,
+            name: 'Tier 1 Securities',
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: colors,
+                line: {
+                    color: colors,
+                    width: 1
+                }
+            },
+            hovertemplate: '<b>%{y}</b><br>' +
+                          'Tier 1 Share: %{x:.2f}%<br>' +
+                          '<extra></extra>',
+            customdata: rawData.data.map(d => ({
+                atsName: d['ATS Name'],
+                tier1: d.Tier1_Pct,
+                innovationTier: d.Innovation_Tier
+            }))
+        };
+
+        // Tier 2 shares (top of stack)
+        const trace2 = {
+            x: tier2Pct,
+            y: venues,
+            name: 'Tier 2 Securities',
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: colors,
+                opacity: 0.6,
+                line: {
+                    color: colors,
+                    width: 1
+                }
+            },
+            hovertemplate: '<b>%{y}</b><br>' +
+                          'Tier 2 Share: %{x:.2f}%<br>' +
+                          '<extra></extra>',
+            customdata: rawData.data.map(d => ({
+                atsName: d['ATS Name'],
+                tier2: d.Tier2_Pct,
+                innovationTier: d.Innovation_Tier
+            }))
+        };
+
+        const layout = {
+            title: '',
+            barmode: 'stack',
+            xaxis: {
+                title: 'Market Share (%)',
+                gridcolor: '#e0e0e0',
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: 'ATS Venue',
+                autorange: 'reversed',
+                tickfont: {
+                    size: 10
+                }
+            },
+            height: 1000,
+            showlegend: true,
+            legend: {
+                x: 1.02,
+                y: 1,
+                xanchor: 'left',
+                yanchor: 'top',
+                bgcolor: 'rgba(255,255,255,0.8)',
+                bordercolor: '#ccc',
+                borderwidth: 1
+            },
+            hovermode: 'closest',
+            margin: {
+                l: 80,
+                r: 150,
+                t: 30,
+                b: 80
+            }
+        };
+
+        const config = {
+            responsive: true,
+            displayModeBar: true,
+            displaylogo: false,
+            modeBarButtonsToRemove: ['lasso2d', 'select2d']
+        };
+
+        Plotly.newPlot('plotly-chart', [trace1, trace2], layout, config);
+
+        // Add custom hover behavior to show full details
+        const chartDiv = document.getElementById('plotly-chart');
+        chartDiv.on('plotly_hover', function(data) {
+            const point = data.points[0];
+            const idx = point.pointIndex;
+            const venueData = rawData.data[idx];
+            
+            const hoverText = `
+                <b>${venueData['ATS Name']} (${venueData.mp_id})</b><br>
+                <i>${venueData.Innovation_Tier}</i><br>
+                <br>
+                <b>Total Market Share: ${venueData.Market_Share.toFixed(2)}%</b><br>
+                Tier 1 Securities: ${venueData.Tier1_Pct.toFixed(2)}%<br>
+                Tier 2 Securities: ${venueData.Tier2_Pct.toFixed(2)}%<br>
+                <br>
+                Total Shares: ${(venueData.Total_Shares / 1e9).toFixed(2)}B
+            `;
+            
+            Plotly.Fx.hover(chartDiv, [
+                {curveNumber: 0, pointNumber: idx},
+                {curveNumber: 1, pointNumber: idx}
+            ], 'x');
+        });
+
+        // Add innovation tier legends as separate traces (invisible, just for legend)
+        const innovationLegends = [
+            {
+                x: [null],
+                y: [null],
+                mode: 'markers',
+                name: 'Tier 1: Structural Innovation (33.4%)',
+                marker: {
+                    color: '#2E86DE',
+                    size: 12,
+                    symbol: 'square'
+                },
+                showlegend: true,
+                hoverinfo: 'skip'
+            },
+            {
+                x: [null],
+                y: [null],
+                mode: 'markers',
+                name: 'Tier 2: Sophisticated Segmentation (46.2%)',
+                marker: {
+                    color: '#8E44AD',
+                    size: 12,
+                    symbol: 'square'
+                },
+                showlegend: true,
+                hoverinfo: 'skip'
+            },
+            {
+                x: [null],
+                y: [null],
+                mode: 'markers',
+                name: 'Tier 3: Standard Segmentation (10.3%)',
+                marker: {
+                    color: '#3498DB',
+                    size: 12,
+                    symbol: 'square'
+                },
+                showlegend: true,
+                hoverinfo: 'skip'
+            },
+            {
+                x: [null],
+                y: [null],
+                mode: 'markers',
+                name: 'Tier 4: Minimal Differentiation (10.2%)',
+                marker: {
+                    color: '#E74C3C',
+                    size: 12,
+                    symbol: 'square'
+                },
+                showlegend: true,
+                hoverinfo: 'skip'
+            }
+        ];
+
+        // Update plot to include innovation tier legends
+        Plotly.react('plotly-chart', [trace1, trace2, ...innovationLegends], layout, config);
+    </script>
+</body>
+</html>
