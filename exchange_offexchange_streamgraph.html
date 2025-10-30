@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Exchange vs Off-Exchange Market Flow</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/streamgraph.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <style>
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #ffffff;
+        }
+        #container { 
+            width: 100%; 
+            height: 700px; 
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        Highcharts.chart('container', {
+            chart: {
+                type: 'streamgraph',
+                backgroundColor: '#ffffff',
+                style: {
+                    fontFamily: 'Inter, sans-serif'
+                }
+            },
+            title: {
+                text: 'Exchange vs Off-Exchange Trading Volume Flow',
+                align: 'left',
+                style: {
+                    fontSize: '24px',
+                    fontWeight: '600',
+                    color: '#171717'
+                }
+            },
+            subtitle: {
+                text: 'Volume distribution by tape across venue types (2025)',
+                align: 'left',
+                style: {
+                    fontSize: '14px',
+                    color: '#6B7280'
+                }
+            },
+            xAxis: {
+                categories: ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09"],
+                labels: {
+                    style: {
+                        fontSize: '13px',
+                        color: '#171717'
+                    }
+                },
+                lineColor: '#E5E7EB',
+                tickColor: '#E5E7EB'
+            },
+            yAxis: {
+                visible: false,
+                startOnTick: false,
+                endOnTick: false
+            },
+            legend: {
+                enabled: true,
+                align: 'center',
+                verticalAlign: 'bottom',
+                itemStyle: {
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    color: '#171717'
+                }
+            },
+            plotOptions: {
+                series: {
+                    label: {
+                        minFontSize: 5,
+                        maxFontSize: 15,
+                        style: {
+                            color: 'rgba(255,255,255,0.9)',
+                            fontWeight: '600'
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                name: 'Exchange - Tape A',
+                data: [46747376553, 48322386832, 60324694281, 64927767944, 55601647329, 56206321439, 60119865554, 53303211923, 60561122856],
+                color: '#2563EB'
+            }, {
+                name: 'Exchange - Tape B',
+                data: [24683153033, 23262717424, 29672804679, 42568785410, 28203843462, 30081641012, 31248580853, 29778650910, 32226467365],
+                color: '#24EB84'
+            }, {
+                name: 'Exchange - Tape C',
+                data: [78293164718, 74260428888, 81676848377, 102131568137, 99460301140, 91087680692, 99753751848, 86550534467, 95723455959],
+                color: '#B2EB24'
+            }, {
+                name: 'Off-Exchange - Tape A',
+                data: [44037803086, 46161165084, 53031031913, 55857649020, 51627982531, 52747826708, 55593709062, 48178396225, 55881683918],
+                color: '#1E40AF'
+            }, {
+                name: 'Off-Exchange - Tape B',
+                data: [25741414646, 23809378191, 29800216718, 38603407066, 29827491341, 32264159308, 32376846508, 30738002145, 36593506374],
+                color: '#059669'
+            }, {
+                name: 'Off-Exchange - Tape C',
+                data: [89266174244, 80928335816, 81668925195, 101594252476, 104593615435, 102521135471, 117632228393, 95434038534, 103499788436],
+                color: '#84CC16'
+            }],
+            exporting: {
+                enabled: true,
+                buttons: {
+                    contextButton: {
+                        menuItems: ['downloadPNG', 'downloadJPEG', 'downloadPDF', 'downloadSVG', 'separator', 'downloadCSV', 'downloadXLS']
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                shared: true,
+                headerFormat: '<b>{point.x}</b><br/>',
+                pointFormat: '{series.name}: {point.y:,.0f} shares<br/>',
+                style: {
+                    fontSize: '12px'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

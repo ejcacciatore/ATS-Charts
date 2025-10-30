@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Off-Exchange Flow Bifurcation - H1 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px 30px;
+            border-bottom: 3px solid #34495e;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+        
+        .header .subtitle {
+            font-size: 0.95em;
+            font-style: italic;
+            color: #bdc3c7;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid #ddd;
+            background: #fafafa;
+        }
+        
+        .stat-card {
+            padding: 20px;
+            text-align: center;
+            border-right: 1px solid #ddd;
+        }
+        
+        .stat-card:last-child {
+            border-right: none;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #ecf0f1;
+            border-bottom: 2px solid #bdc3c7;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            border-right: 1px solid #bdc3c7;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+            background: #ecf0f1;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+        }
+        
+        .tab:hover {
+            background: #d5dbdb;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #2c3e50;
+            border-bottom: 2px solid white;
+            margin-bottom: -2px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 350px;
+            margin: 20px 0;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 0.9em;
+        }
+        
+        .data-table th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85em;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .data-table .number {
+            text-align: right;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .data-table .percentage {
+            text-align: right;
+            color: #34495e;
+            font-weight: 600;
+        }
+        
+        .data-table .header-row {
+            background: #ecf0f1;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .data-table .total-row {
+            background: #34495e;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .data-table .total-row td {
+            color: white;
+        }
+        
+        .methodology {
+            background: #fafafa;
+            padding: 20px;
+            border: 1px solid #ddd;
+            font-size: 0.9em;
+        }
+        
+        .methodology h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+        
+        .methodology p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .methodology ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        
+        .methodology li {
+            margin-bottom: 5px;
+        }
+        
+        .source-note {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media print {
+            .tabs {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-right: none;
+                border-bottom: 1px solid #bdc3c7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Off-Exchange Flow Bifurcation</h1>
+            <p class="subtitle">Institutional dark pools vs. retail wholesalers — H1 2025</p>
+        </div>
+        
+        <!-- Key Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">50.2%</div>
+                <div class="stat-label">Off-Exchange</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">25.5%</div>
+                <div class="stat-label">Institutional ATSs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">74.5%</div>
+                <div class="stat-label">Retail Wholesalers</div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'overview')">Overview</div>
+            <div class="tab" onclick="openTab(event, 'trends')">Quarterly Trends</div>
+            <div class="tab" onclick="openTab(event, 'data')">Detailed Data</div>
+            <div class="tab" onclick="openTab(event, 'methodology')">Methodology</div>
+        </div>
+        
+        <!-- Tab Content 1: Overview -->
+        <div id="overview" class="tab-content active">
+            <div class="chart-wrapper">
+                <canvas id="bifurcationChart"></canvas>
+            </div>
+            <p style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 15px;">
+                <strong>Key Finding:</strong> Within off-exchange trading, retail wholesalers account for 74.5% of volume 
+                (129.7B shares/month), nearly 3x the institutional ATS segment at 25.5% (44.3B shares/month).
+            </p>
+        </div>
+        
+        <!-- Tab Content 2: Quarterly Trends -->
+        <div id="trends" class="tab-content">
+            <div class="chart-wrapper">
+                <canvas id="trendChart"></canvas>
+            </div>
+            <table class="data-table" style="margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th>Quarter</th>
+                        <th style="text-align: right;">Institutional ATSs</th>
+                        <th style="text-align: right;">Retail Wholesalers</th>
+                        <th style="text-align: right;">Total Off-Exchange</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Q1 2025</td>
+                        <td class="number">43.7B</td>
+                        <td class="number">114.5B</td>
+                        <td class="number">158.2B</td>
+                    </tr>
+                    <tr>
+                        <td>Q2 2025</td>
+                        <td class="number">44.9B</td>
+                        <td class="number">145.0B</td>
+                        <td class="number">189.9B</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Tab Content 3: Detailed Data -->
+        <div id="data" class="tab-content">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Segment</th>
+                        <th>Monthly Volume</th>
+                        <th>% of Off-Exchange</th>
+                        <th>% of Total Market</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="header-row">
+                        <td colspan="4">Exchange Venues</td>
+                    </tr>
+                    <tr>
+                        <td>NYSE, Nasdaq, CBOE</td>
+                        <td class="number">172.9B shares</td>
+                        <td class="percentage">—</td>
+                        <td class="percentage">49.8%</td>
+                    </tr>
+                    <tr class="header-row">
+                        <td colspan="4">Off-Exchange Venues</td>
+                    </tr>
+                    <tr>
+                        <td>Institutional ATSs</td>
+                        <td class="number">44.3B shares</td>
+                        <td class="percentage">25.5%</td>
+                        <td class="percentage">12.8%</td>
+                    </tr>
+                    <tr>
+                        <td>Retail Wholesalers</td>
+                        <td class="number">129.7B shares</td>
+                        <td class="percentage">74.5%</td>
+                        <td class="percentage">37.4%</td>
+                    </tr>
+                    <tr style="background: #f8f9fa; font-weight: 600;">
+                        <td>Subtotal Off-Exchange</td>
+                        <td class="number">174.0B shares</td>
+                        <td class="percentage">100%</td>
+                        <td class="percentage">50.2%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>Total Market</td>
+                        <td class="number">346.9B shares</td>
+                        <td class="percentage">—</td>
+                        <td class="percentage">100%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #fafafa; border-left: 3px solid #34495e;">
+                <p style="font-size: 0.9em; color: #555;">
+                    <strong>Competitive Focus:</strong><br>
+                    <strong>Institutional ATSs:</strong> Matching precision, timing determinism, adverse-selection control<br>
+                    <strong>Retail Wholesalers:</strong> Price improvement, internalization efficiency on small-lot flow
+                </p>
+            </div>
+        </div>
+        
+        <!-- Tab Content 4: Methodology -->
+        <div id="methodology" class="tab-content">
+            <div class="methodology">
+                <h4>Data Sources</h4>
+                <p><strong>Primary Sources:</strong> FINRA ATS Transparency Data (Tier 1 & Tier 2) and CBOE Market Statistics, H1 2025</p>
+                
+                <h4 style="margin-top: 15px;">Calculation Method</h4>
+                <ul>
+                    <li><strong>Institutional ATS Volume:</strong> Sum of all FINRA-registered NMS Stock Alternative Trading Systems (Tier 1 + Tier 2), excluding grand total summary rows</li>
+                    <li><strong>Total Off-Exchange Volume:</strong> Combined volume from FINRA/NYSE TRF, FINRA/Nasdaq TRF Carteret, and FINRA/Nasdaq TRF Chicago</li>
+                    <li><strong>Retail Wholesaler Volume:</strong> Calculated as (Total Off-Exchange Volume) minus (Institutional ATS Volume)</li>
+                    <li><strong>Period:</strong> Q1 2025 (January-March) and Q2 2025 (April-June), averaged to monthly figures</li>
+                </ul>
+                
+                <h4 style="margin-top: 15px;">Key Finding</h4>
+                <p>The <strong>25.5% / 74.5%</strong> bifurcation reveals that retail wholesaling represents nearly 3x the volume of institutional ATS trading within off-exchange venues. These two ecosystems operate under fundamentally different competitive logics: institutional ATSs compete on matching innovation and adverse-selection control, while retail wholesalers optimize for price improvement and internalization efficiency.</p>
+            </div>
+            
+            <p class="source-note">
+                Source: Author's analysis based on FINRA ATS Transparency Data and CBOE Market Statistics. 
+                All figures represent monthly averages for H1 2025 (January-June 2025).
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching functionality
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tabs
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Show current tab and mark as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Data
+        const data = {
+            h1_2025: {
+                institutional_ats: 44.30,
+                retail_wholesaler: 129.71
+            },
+            q1_2025: {
+                institutional_ats: 43.68,
+                retail_wholesaler: 114.47
+            },
+            q2_2025: {
+                institutional_ats: 44.92,
+                retail_wholesaler: 144.95
+            }
+        };
+        
+        // Chart 1: Off-Exchange Bifurcation (Pie)
+        const ctx1 = document.getElementById('bifurcationChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: ['Institutional ATSs (25.5%)', 'Retail Wholesalers (74.5%)'],
+                datasets: [{
+                    data: [
+                        data.h1_2025.institutional_ats,
+                        data.h1_2025.retail_wholesaler
+                    ],
+                    backgroundColor: [
+                        '#5d6d7e',  // Dark gray-blue for institutional
+                        '#95a5a6'   // Light gray for retail
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 13,
+                                family: "'Helvetica', 'Arial', sans-serif"
+                            },
+                            padding: 15,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed;
+                                return `${label}: ${value.toFixed(1)}B shares/month`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Chart 2: Quarterly Trends (Bar)
+        const ctx2 = document.getElementById('trendChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Q1 2025', 'Q2 2025'],
+                datasets: [
+                    {
+                        label: 'Institutional ATSs',
+                        data: [data.q1_2025.institutional_ats, data.q2_2025.institutional_ats],
+                        backgroundColor: '#5d6d7e',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Retail Wholesalers',
+                        data: [data.q1_2025.retail_wholesaler, data.q2_2025.retail_wholesaler],
+                        backgroundColor: '#95a5a6',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 12,
+                                family: "'Helvetica', 'Arial', sans-serif"
+                            }
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Monthly Volume (Billions of Shares)',
+                            font: {
+                                size: 12,
+                                family: "'Helvetica', 'Arial', sans-serif"
+                            }
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            },
+                            callback: function(value) {
+                                return value.toFixed(0) + 'B';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 12,
+                                family: "'Helvetica', 'Arial', sans-serif"
+                            },
+                            padding: 15,
+                            usePointStyle: true,
+                            pointStyle: 'rect'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.parsed.y.toFixed(1)}B shares`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
