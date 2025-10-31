@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Figure 3: ATS Market Share by Innovation Tier</title>
+    <title>Figure 3: ATS Market Share by Innovation Tier (All 33 Venues)</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <style>
         body {
             font-family: Calibri, 'Segoe UI', Arial, sans-serif;
@@ -17,38 +20,139 @@
         }
         
         .figure-container {
-            margin: 40px 0;
-            text-align: center;
-        }
-        
-        .figure-image {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 20px 0;
         }
         
         .figure-label {
             font-weight: bold;
             font-size: 12pt;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-align: left;
+        }
+        
+        .chart-wrapper {
+            width: 100%;
+            margin: 0 0 15px 0;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        #atsChart {
+            width: 100%;
+            height: 700px;
+            min-height: 700px;
         }
         
         .figure-caption {
             font-size: 10pt;
             color: #555;
             text-align: left;
-            margin-top: 10px;
+            margin: 10px 0;
             line-height: 1.6;
             padding: 15px;
             background-color: #f8f9fa;
             border-left: 3px solid #3498db;
         }
         
+        .tier-colors {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .tier-color-item {
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .tier-color-item:hover {
+            background-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tier-color-item.active {
+            background-color: #ffffff;
+            border: 2px solid #2c3e50;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        
+        .tier-color-item.inactive {
+            opacity: 0.4;
+        }
+        
+        .color-box {
+            width: 60px;
+            height: 30px;
+            margin: 0 auto 8px auto;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .tier-1 { background-color: #3498db; }
+        .tier-2 { background-color: #9b59b6; }
+        .tier-3 { background-color: #e67e22; }
+        .tier-4 { background-color: #c0392b; }
+        
+        .tier-label {
+            font-size: 10pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+        
+        .tier-description {
+            font-size: 8pt;
+            color: #666;
+            line-height: 1.3;
+        }
+        
+        .filter-instructions {
+            text-align: center;
+            font-size: 9pt;
+            color: #7f8c8d;
+            font-style: italic;
+            margin: 8px 0;
+        }
+        
+        .reset-button {
+            display: block;
+            margin: 10px auto;
+            padding: 8px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10pt;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .reset-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .reset-button.hidden {
+            display: none;
+        }
+        
         .key-findings {
-            margin-top: 30px;
+            margin: 15px 0;
             padding: 20px;
             background-color: #fff9e6;
             border-left: 4px solid #f39c12;
@@ -71,108 +175,340 @@
             color: #2c3e50;
         }
         
-        .tier-colors {
-            display: flex;
-            justify-content: space-around;
-            margin: 30px 0;
+        .methodology {
+            margin: 15px 0;
             padding: 20px;
             background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .tier-color-item {
-            text-align: center;
-            flex: 1;
-            margin: 0 10px;
-        }
-        
-        .color-box {
-            width: 60px;
-            height: 30px;
-            margin: 0 auto 8px auto;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        
-        .tier-1 { background-color: #3498db; }
-        .tier-2 { background-color: #9b59b6; }
-        .tier-3 { background-color: #e67e22; }
-        .tier-4 { background-color: #c0392b; }
-        
-        .tier-label {
+            border-left: 3px solid #95a5a6;
             font-size: 9pt;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .tier-description {
-            font-size: 8pt;
             color: #666;
         }
     </style>
 </head>
 <body>
     <div class="figure-container">
-        <img src="ats_market_share_by_tier.png" alt="ATS Market Share by Innovation Tier" class="figure-image">
-        
         <div class="figure-label">
-            Figure 3: Institutional ATS Market Share by Innovation Tier (July-September 2025)
+            Figure 3: Institutional ATS Market Share by Innovation Tier (Q1 2025 - All 33 Venues)
+        </div>
+        
+        <div class="chart-wrapper">
+            <div id="atsChart"></div>
         </div>
         
         <div class="figure-caption">
-            Color-coded market share distribution across all 33 registered ATSs, showing concentration of volume in Tier 1 structural innovators (blue), Tier 2 sophisticated segmentation (purple), Tier 3 standard segmentation (orange), and Tier 4 minimal differentiation (red). Top 5 venues capture 51.4% of market share, while 28 venues compete for the remaining 48.6%. Data represents 63.7 billion shares analyzed during July 29 - September 15, 2025. Source: Transaction-level ATS data analysis; FINRA ATS reporting.
+            Color-coded market share distribution across all 33 registered ATSs, showing concentration of volume in Tier 1 structural innovators (blue), Tier 2 sophisticated segmentation (purple), Tier 3 standard segmentation (orange), and Tier 4 minimal differentiation (red). Top 5 venues (IntelligentCross 15.6%, UBS ATS 15.5%, Sigma X2 9.7%, Level ATS 7.7%, Instinct X 6.7%) capture 55.1% of market share, while 28 venues compete for the remaining 44.9%. Data represents 131.0 billion shares analyzed during Q1 2025. Source: FINRA ATS Transparency Data.
         </div>
     </div>
     
     <div class="tier-colors">
-        <div class="tier-color-item">
+        <div class="tier-color-item" data-tier="Tier 1" onclick="toggleTier('Tier 1')">
             <div class="color-box tier-1"></div>
             <div class="tier-label">Tier 1</div>
-            <div class="tier-description">Structural Innovation<br>(31.4%)</div>
+            <div class="tier-description">Structural Innovation<br>(40.8% | 9 venues)</div>
         </div>
-        <div class="tier-color-item">
+        <div class="tier-color-item" data-tier="Tier 2" onclick="toggleTier('Tier 2')">
             <div class="color-box tier-2"></div>
             <div class="tier-label">Tier 2</div>
-            <div class="tier-description">Sophisticated Segmentation<br>(42.3%)</div>
+            <div class="tier-description">Sophisticated Segmentation<br>(46.7% | 10 venues)</div>
         </div>
-        <div class="tier-color-item">
+        <div class="tier-color-item" data-tier="Tier 3" onclick="toggleTier('Tier 3')">
             <div class="color-box tier-3"></div>
             <div class="tier-label">Tier 3</div>
-            <div class="tier-description">Standard Segmentation<br>(14.7%)</div>
+            <div class="tier-description">Standard Segmentation<br>(10.8% | 6 venues)</div>
         </div>
-        <div class="tier-color-item">
+        <div class="tier-color-item" data-tier="Tier 4" onclick="toggleTier('Tier 4')">
             <div class="color-box tier-4"></div>
             <div class="tier-label">Tier 4</div>
-            <div class="tier-description">Minimal Differentiation<br>(11.6%)</div>
+            <div class="tier-description">Minimal Differentiation<br>(1.7% | 8 venues)</div>
         </div>
     </div>
+    
+    <div class="filter-instructions">
+        Click on any tier above to filter the chart | Click again to deselect
+    </div>
+    
+    <button id="resetButton" class="reset-button hidden" onclick="resetFilter()">
+        Show All Tiers
+    </button>
     
     <div class="key-findings">
         <h3>Key Findings</h3>
         
         <div class="finding-item">
-            <span class="finding-label">Market Concentration:</span> Top 5 venues capture 51.4% of total volume (IntelligentCross 16.1%, UBS ATS 13.0%, Sigma X2 8.6%, Level ATS 7.6%, Instinct X 6.1%), while remaining 28 venues compete for 48.6%.
+            <span class="finding-label">Market Concentration:</span> Top 5 venues capture 55.1% of total volume (IntelligentCross 15.6%, UBS ATS 15.5%, Sigma X2 9.7%, Level ATS 7.7%, Instinct X 6.7%), while remaining 28 venues compete for 44.9%.
         </div>
         
         <div class="finding-item">
-            <span class="finding-label">Innovation Premium:</span> Structural innovation (Tier 1) commands 31.4% of market volume despite representing only 9 venues, suggesting market preference for genuinely differentiated matching protocols.
+            <span class="finding-label">Innovation Premium:</span> Structural innovation (Tier 1) commands 40.8% of market volume across 9 venues, suggesting market preference for genuinely differentiated matching protocols over replication.
         </div>
         
         <div class="finding-item">
-            <span class="finding-label">Segmentation Dominance:</span> Tier 2 sophisticated segmentation venues control 42.3% of volume, the largest share among all tiers, indicating institutions value quantitatively-measured adverse selection protection over pure structural innovation.
+            <span class="finding-label">Segmentation Dominance:</span> Tier 2 sophisticated segmentation venues control 46.7% of volume (10 venues), the largest share among all tiers, indicating institutions value quantitatively-measured adverse selection protection.
         </div>
         
         <div class="finding-item">
-            <span class="finding-label">Long Tail Challenge:</span> Combined Tiers 3+4 represent only 26.3% of volume across 16 venues, validating the fragmentation and transparency gap thesis—these venues struggle to differentiate and capture meaningful market share.
+            <span class="finding-label">Long Tail Challenge:</span> Combined Tiers 3+4 represent only 12.5% of volume across 14 venues, validating the fragmentation and transparency gap thesis—these venues struggle to differentiate and capture meaningful market share.
         </div>
         
         <div class="finding-item">
-            <span class="finding-label">Competitive Dynamics:</span> Unlike exchange markets with winner-take-all characteristics, ATS competition remains distributed—no single venue exceeds 20% market share, suggesting ongoing value from venue diversity despite concentration trends.
+            <span class="finding-label">Competitive Dynamics:</span> Unlike exchange markets with winner-take-all characteristics, ATS competition remains distributed—no single venue exceeds 16% market share, suggesting ongoing value from venue diversity despite concentration trends.
         </div>
     </div>
     
-    <div style="margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-left: 3px solid #95a5a6; font-size: 9pt; color: #666;">
-        <strong>Methodology Notes:</strong> Venues classified based on operational structure, matching methodology, and degree of innovation beyond standard continuous midpoint engines. Classifications validated against Form ATS-N disclosures and confirmed operational characteristics. Data period: July 29 - September 15, 2025 (7 weeks). Total volume analyzed: 63.7 billion shares across 33 active NMS Stock ATSs.
+    <div class="methodology">
+        <strong>Methodology Notes:</strong> Venues classified based on operational structure, matching methodology, and degree of innovation beyond standard continuous midpoint engines. Classifications validated against Form ATS-N disclosures and confirmed operational characteristics. Data period: Q1 2025. Total volume analyzed: 131.0 billion shares across 33 active NMS Stock ATSs.
     </div>
+    
+    <script>
+        // Complete ATS Market Share Data - All 33 Venues (Q1 2025)
+        const atsData = [
+            {name: 'IntelligentCross (INCR)', y: 15.60, tier: 'Tier 1', color: '#3498db'},
+            {name: 'UBS ATS (UBSA)', y: 15.47, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'Sigma X2 (SGMT)', y: 9.68, tier: 'Tier 1', color: '#3498db'},
+            {name: 'Level ATS (EBXL)', y: 7.70, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'Instinct X (MLIX)', y: 6.66, tier: 'Tier 1', color: '#3498db'},
+            {name: 'MS Pool ATS-4 (MSPL)', y: 6.61, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'MS Trajectory Cross (MSTX)', y: 5.67, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'JPM-X (JPMX)', y: 3.98, tier: 'Tier 3', color: '#e67e22'},
+            {name: 'PureStream (PURE)', y: 3.79, tier: 'Tier 1', color: '#3498db'},
+            {name: 'Barclays ATS (LATS)', y: 3.11, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'OneChronos (CGXS)', y: 2.49, tier: 'Tier 1', color: '#3498db'},
+            {name: 'BIDS ATS (BIDS)', y: 2.30, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'JPB-X (JPBX)', y: 2.29, tier: 'Tier 3', color: '#e67e22'},
+            {name: 'Virtu MatchIt (KCGM)', y: 2.25, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'IBKR ATS (IATS)', y: 2.24, tier: 'Tier 3', color: '#e67e22'},
+            {name: 'POSIT (ITGP)', y: 1.72, tier: 'Tier 1', color: '#3498db'},
+            {name: 'CrossStream (XSTM)', y: 1.48, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'CBX (ICBX)', y: 1.39, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'Citi-One ATS (ONEC)', y: 0.83, tier: 'Tier 3', color: '#e67e22'},
+            {name: 'BNPP Cortex (BNPX)', y: 0.80, tier: 'Tier 3', color: '#e67e22'},
+            {name: 'MS RPool ATS-6 (MSRP)', y: 0.70, tier: 'Tier 2', color: '#9b59b6'},
+            {name: 'Liquidnet H2O (LQNA)', y: 0.70, tier: 'Tier 3', color: '#e67e22'},
+            {name: 'Instinet BlockCross (BLKX)', y: 0.69, tier: 'Tier 4', color: '#c0392b'},
+            {name: 'BOATS (BLUE)', y: 0.63, tier: 'Tier 1', color: '#3498db'},
+            {name: 'DEALERWEB (DLTA)', y: 0.54, tier: 'Tier 4', color: '#c0392b'},
+            {name: 'Liquidnet Negotiation (LQNT)', y: 0.25, tier: 'Tier 4', color: '#c0392b'},
+            {name: 'CODA (CODA)', y: 0.16, tier: 'Tier 1', color: '#3498db'},
+            {name: 'Luminex ATS (LMNX)', y: 0.14, tier: 'Tier 4', color: '#c0392b'},
+            {name: 'IBKR Eos ATS (IEOS)', y: 0.05, tier: 'Tier 4', color: '#c0392b'},
+            {name: 'AlphaX US (ALPX)', y: 0.04, tier: 'Tier 1', color: '#3498db'},
+            {name: 'Stifel X (STFX)', y: 0.03, tier: 'Tier 4', color: '#c0392b'},
+            {name: 'Bruce ATS (BOSS)', y: 0.00, tier: 'Tier 4', color: '#c0392b'},
+            {name: 'MOON ATS (MOON)', y: 0.00, tier: 'Tier 4', color: '#c0392b'}
+        ];
+        
+        let chart;
+        let activeTiers = new Set();
+        
+        // Initialize chart when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initChart();
+        });
+        
+        function initChart() {
+            chart = Highcharts.chart('atsChart', {
+                chart: {
+                    type: 'bar',
+                    backgroundColor: '#ffffff',
+                    height: 700,
+                    style: {
+                        fontFamily: 'Calibri, Segoe UI, Arial, sans-serif'
+                    },
+                    animation: {
+                        duration: 500
+                    }
+                },
+                title: {
+                    text: 'ATS Market Share by Innovation Tier - All 33 Venues',
+                    style: {
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        color: '#2c3e50'
+                    }
+                },
+                subtitle: {
+                    text: 'Total Market: 131.0B shares | Q1 2025 | 33 Active Venues',
+                    style: {
+                        fontSize: '12px',
+                        color: '#7f8c8d'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        style: {
+                            fontSize: '10px',
+                            color: '#2c3e50'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    max: 17,
+                    title: {
+                        text: 'Market Share (%)',
+                        style: {
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            color: '#2c3e50'
+                        }
+                    },
+                    gridLineColor: '#ecf0f1',
+                    labels: {
+                        format: '{value}%'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    backgroundColor: '#2c3e50',
+                    borderColor: '#34495e',
+                    borderRadius: 8,
+                    style: {
+                        color: '#ffffff',
+                        fontSize: '11px'
+                    },
+                    formatter: function() {
+                        return '<b>' + this.point.name + '</b><br/>' +
+                               this.point.tier + '<br/>' +
+                               'Market Share: <b>' + this.point.y.toFixed(2) + '%</b>';
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 3,
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function() {
+                                // Only show label if market share > 0.5%
+                                return this.point.y > 0.5 ? this.point.y.toFixed(1) + '%' : '';
+                            },
+                            style: {
+                                fontSize: '9px',
+                                fontWeight: 'bold',
+                                color: '#2c3e50',
+                                textOutline: 'none'
+                            }
+                        },
+                        groupPadding: 0.02,
+                        pointPadding: 0.02,
+                        animation: {
+                            duration: 500
+                        }
+                    },
+                    series: {
+                        animation: {
+                            duration: 500
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Market Share',
+                    data: atsData.map(item => ({
+                        name: item.name,
+                        y: item.y,
+                        color: item.color,
+                        tier: item.tier,
+                        originalColor: item.color
+                    })),
+                    colorByPoint: true
+                }],
+                credits: {
+                    enabled: true,
+                    text: 'Source: FINRA ATS Transparency Data | Q1 2025',
+                    style: {
+                        fontSize: '9px',
+                        color: '#7f8c8d'
+                    }
+                },
+                exporting: {
+                    enabled: true,
+                    buttons: {
+                        contextButton: {
+                            menuItems: ['downloadPNG', 'downloadJPEG', 'downloadPDF', 'downloadSVG']
+                        }
+                    }
+                }
+            });
+        }
+        
+        function toggleTier(tier) {
+            const tierElement = document.querySelector(`[data-tier="${tier}"]`);
+            
+            // Toggle the active tier
+            if (activeTiers.has(tier)) {
+                activeTiers.delete(tier);
+                tierElement.classList.remove('active');
+            } else {
+                activeTiers.add(tier);
+                tierElement.classList.add('active');
+            }
+            
+            // Update the chart
+            updateChart();
+            
+            // Show/hide reset button
+            const resetButton = document.getElementById('resetButton');
+            if (activeTiers.size > 0) {
+                resetButton.classList.remove('hidden');
+            } else {
+                resetButton.classList.add('hidden');
+            }
+            
+            // Update inactive states on tier boxes
+            document.querySelectorAll('.tier-color-item').forEach(item => {
+                const itemTier = item.getAttribute('data-tier');
+                if (activeTiers.size > 0 && !activeTiers.has(itemTier)) {
+                    item.classList.add('inactive');
+                } else {
+                    item.classList.remove('inactive');
+                }
+            });
+        }
+        
+        function resetFilter() {
+            activeTiers.clear();
+            
+            // Remove all active/inactive classes
+            document.querySelectorAll('.tier-color-item').forEach(item => {
+                item.classList.remove('active', 'inactive');
+            });
+            
+            // Hide reset button
+            document.getElementById('resetButton').classList.add('hidden');
+            
+            // Update chart
+            updateChart();
+        }
+        
+        function updateChart() {
+            if (!chart || !chart.series || !chart.series[0]) return;
+            
+            const series = chart.series[0];
+            
+            // Update each point
+            series.data.forEach((point, index) => {
+                const shouldShow = activeTiers.size === 0 || activeTiers.has(point.tier);
+                
+                if (shouldShow) {
+                    // Show with full color and opacity
+                    point.update({
+                        color: point.originalColor,
+                        opacity: 1
+                    }, false);
+                } else {
+                    // Make transparent/gray
+                    point.update({
+                        color: 'rgba(200, 200, 200, 0.2)',
+                        opacity: 0.3
+                    }, false);
+                }
+            });
+            
+            // Redraw chart with animation
+            chart.redraw();
+        }
+    </script>
 </body>
 </html>
