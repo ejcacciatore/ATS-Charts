@@ -56,7 +56,7 @@
         
         .venues-header {
             display: grid;
-            grid-template-columns: 180px 70px 70px 1fr;
+            grid-template-columns: 180px 70px 80px 1fr;
             gap: 10px;
             padding: 8px 0;
             border-bottom: 2px solid #2c3e50;
@@ -68,7 +68,7 @@
         
         .venue-row {
             display: grid;
-            grid-template-columns: 180px 70px 70px 1fr;
+            grid-template-columns: 180px 70px 80px 1fr;
             gap: 10px;
             align-items: center;
             padding: 10px 0;
@@ -101,7 +101,7 @@
         
         .trend-indicator {
             text-align: center;
-            font-size: 10pt;
+            font-size: 9.5pt;
             font-weight: 600;
         }
         
@@ -117,21 +117,10 @@
             color: #7f8c8d;
         }
         
-        .trend-new {
-            color: #3498db;
-        }
-        
         .venue-desc {
             font-size: 10pt;
             color: #555;
             line-height: 1.4;
-        }
-        
-        .sparkline {
-            display: inline-block;
-            width: 40px;
-            height: 16px;
-            margin-left: 4px;
         }
         
         .tooltip {
@@ -181,7 +170,7 @@
     <div class="tier-visual">
         <div class="tier-header">
             <h3 class="tier-title">Tier 1 — Structural Innovation</h3>
-            <p class="tier-subtitle">*32% of ATS volume</p>
+            <p class="tier-subtitle">*32% of ATS volume (H1 2025)</p>
         </div>
         
         <div class="definition">
@@ -190,85 +179,69 @@
         
         <div class="venues-header">
             <div>Venue</div>
-            <div style="text-align: right;">Share</div>
-            <div style="text-align: center;">6Q Trend</div>
+            <div style="text-align: right;">H1 Share</div>
+            <div style="text-align: center;">Q/Q Trend</div>
             <div>Innovation</div>
         </div>
         
         <div class="venue-row">
             <div class="venue-name">IntelligentCross</div>
-            <div class="venue-share">16.2%</div>
+            <div class="venue-share">16.9%</div>
             <div class="trend-indicator trend-growing">
-                +186 bps
-                <svg class="sparkline" viewBox="0 0 40 16">
-                    <polyline points="0,12 8,13 16,14 24,11 32,8 40,4" 
-                              fill="none" stroke="#27ae60" stroke-width="2"/>
-                </svg>
+                +302 bps ↑↑
             </div>
             <div class="venue-desc">ML-driven variable randomization; windows expand during volatility.</div>
-            <div class="tooltip">Q1'24: 6.99% → Q2'25: 8.85% (+186 bps)</div>
+            <div class="tooltip">H1: 16.90% | Q1: 15.38% → Q2: 18.40% (+302 bps explosive growth)</div>
         </div>
         
         <div class="venue-row">
             <div class="venue-name">Level ATS</div>
-            <div class="venue-share">7.6%</div>
+            <div class="venue-share">7.4%</div>
             <div class="trend-indicator trend-declining">
-                +37 bps
-                <svg class="sparkline" viewBox="0 0 40 16">
-                    <polyline points="0,12 8,9 16,7 24,8 32,8 40,11" 
-                              fill="none" stroke="#e74c3c" stroke-width="2"/>
-                </svg>
+                -45 bps ↓
             </div>
             <div class="venue-desc">Channel-based segmentation with counterparty controls and mark-out analytics.</div>
-            <div class="tooltip">Q1'24: 3.37% → Q2'25: 3.74% (+37 bps, declining recently)</div>
+            <div class="tooltip">H1: 7.36% | Q1: 7.59% → Q2: 7.14% (-45 bps, losing to ML venues)</div>
         </div>
         
         <div class="venue-row">
             <div class="venue-name">PureStream</div>
-            <div class="venue-share">3.7%</div>
-            <div class="trend-indicator trend-growing">
-                +84 bps
-                <svg class="sparkline" viewBox="0 0 40 16">
-                    <polyline points="0,14 8,13 16,14 24,10 32,5 40,6" 
-                              fill="none" stroke="#27ae60" stroke-width="2"/>
-                </svg>
+            <div class="venue-share">3.8%</div>
+            <div class="trend-indicator trend-stable">
+                +4 bps →
             </div>
             <div class="venue-desc">SIP-referenced volume matching with Liquidity Transfer Rate priority up to 3,000%.</div>
-            <div class="tooltip">Q1'24: 1.19% → Q2'25: 2.03% (+84 bps, +71%)</div>
+            <div class="tooltip">H1: 3.76% | Q1: 3.74% → Q2: 3.78% (+4 bps, stable)</div>
         </div>
         
         <div class="venue-row">
             <div class="venue-name">OneChronos</div>
-            <div class="venue-share">3.0%</div>
-            <div class="trend-indicator trend-growing">
-                +76 bps
-                <svg class="sparkline" viewBox="0 0 40 16">
-                    <polyline points="0,15 8,15 16,11 24,8 32,7 40,6" 
-                              fill="none" stroke="#27ae60" stroke-width="2"/>
-                </svg>
+            <div class="venue-share">2.6%</div>
+            <div class="trend-indicator trend-stable">
+                +22 bps ↑
             </div>
             <div class="venue-desc">Combinatorial auctions (20-200ms intervals) with expressive bidding; no time priority.</div>
-            <div class="tooltip">Q1'24: 0.63% → Q2'25: 1.39% (+76 bps, +121%)</div>
+            <div class="tooltip">H1: 2.57% | Q1: 2.45% → Q2: 2.68% (+22 bps, steady growth)</div>
         </div>
         
         <div class="venue-row">
             <div class="venue-name">Blue Ocean</div>
             <div class="venue-share">0.8%</div>
             <div class="trend-indicator trend-stable">
-                —
+                +39 bps ↑
             </div>
             <div class="venue-desc">Overnight trading (8 pm–4 am ET) with displayed order book.</div>
-            <div class="tooltip">Trend data not available (may be Tier 2 classification)</div>
+            <div class="tooltip">H1: 0.82% | Q1: 0.62% → Q2: 1.01% (+39 bps, gaining traction)</div>
         </div>
         
         <div class="venue-row">
             <div class="venue-name">AlphaX US</div>
-            <div class="venue-share">0.2%</div>
-            <div class="trend-indicator trend-new">
-                New
+            <div class="venue-share">0.1%</div>
+            <div class="trend-indicator trend-stable">
+                +14 bps ↑
             </div>
             <div class="venue-desc">Periodic batch auctions with 10 ms collection intervals plus randomization layers.</div>
-            <div class="tooltip">Launched Q1'25: 0.02% → Q2'25: 0.09% (+350%)</div>
+            <div class="tooltip">H1: 0.11% | Q1: 0.04% → Q2: 0.18% (+14 bps, new venue growth)</div>
         </div>
     </div>
 </body>
