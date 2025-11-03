@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureStream Execution Flow</title>
+    <style>
+        body {
+            font-family: Cambria, Georgia, serif;
+            font-size: 12pt;
+            margin: 20px;
+            background: white;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+        
+        .title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 11pt;
+            color: #555;
+            font-style: italic;
+        }
+        
+        .flow-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .flow-table th {
+            background: #2c5aa0;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-size: 10.5pt;
+            font-weight: bold;
+            border: 1px solid #1a3d6d;
+        }
+        
+        .flow-table td {
+            padding: 10px 8px;
+            border: 1px solid #ddd;
+            font-size: 10.5pt;
+        }
+        
+        .flow-table tbody tr {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .flow-table tbody tr:hover {
+            background: #f0f7ff;
+            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.15);
+        }
+        
+        .flow-table tbody tr.active {
+            background: #e3f2fd;
+            border-left: 4px solid #2c5aa0;
+        }
+        
+        .time-col {
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+            color: #444;
+        }
+        
+        .ref-trade {
+            font-weight: 600;
+        }
+        
+        .fill-col {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .threshold-yes {
+            color: #0a7c0a;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .threshold-no {
+            color: #ff8c00;
+            font-weight: bold;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .print-col {
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+        }
+        
+        .key-section {
+            background: #f8f8f8;
+            padding: 15px;
+            border-left: 4px solid #2c5aa0;
+            margin-top: 20px;
+            font-size: 10pt;
+            line-height: 1.6;
+        }
+        
+        .key-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 11pt;
+        }
+        
+        .explanation-box {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .explanation-box.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .explanation-title {
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 8px;
+            font-size: 11pt;
+        }
+        
+        .calculation {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 8px;
+            margin: 8px 0;
+            border-left: 3px solid #2c5aa0;
+            font-size: 10pt;
+        }
+        
+        .highlight-value {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        
+        @media print {
+            .explanation-box { display: none; }
+            .flow-table tbody tr:hover { background: white; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">PureStream Stream Execution Flow (LTR: 10%)</div>
+            <div class="subtitle">Click rows to see calculation details</div>
+        </div>
+        
+        <table class="flow-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Ref Trade</th>
+                    <th>Fill (10%)</th>
+                    <th>>20?</th>
+                    <th>Print to Tape</th>
+                    <th>Print Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-row="1" data-ref-qty="500" data-ref-price="56.00" data-fill="50" data-threshold="yes" data-calc="500 × 0.10 = 50">
+                    <td class="time-col">10:20:01.200</td>
+                    <td class="ref-trade">500 @ $56.00</td>
+                    <td class="fill-col">50</td>
+                    <td class="threshold-yes">Yes</td>
+                    <td class="print-col">50 @ $56.00</td>
+                    <td class="time-col">10:20:01.210</td>
+                </tr>
+                <tr data-row="2" data-ref-qty="400" data-ref-price="56.01" data-fill="40" data-threshold="yes" data-calc="400 × 0.10 = 40">
+                    <td class="time-col">10:20:01.570</td>
+                    <td class="ref-trade">400 @ $56.01</td>
+                    <td class="fill-col">40</td>
+                    <td class="threshold-yes">Yes</td>
+                    <td class="print-col">40 @ $56.01</td>
+                    <td class="time-col">10:20:01.580</td>
+                </tr>
+                <tr data-row="3" data-ref-qty="180" data-ref-price="56.00" data-fill="18" data-threshold="no" data-calc="180 × 0.10 = 18 (accumulated)" data-accumulate="true">
+                    <td class="time-col">10:20:02.100</td>
+                    <td class="ref-trade">180 @ $56.00</td>
+                    <td class="fill-col">18</td>
+                    <td class="threshold-no">No (held)</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr data-row="4" data-ref-qty="20" data-ref-price="56.00" data-fill="20" data-threshold="yes" data-calc="20 × 0.10 = 2, but 18 + 2 = 20 ≥ threshold" data-release="18">
+                    <td class="time-col">10:20:02.300</td>
+                    <td class="ref-trade">20 @ $56.00</td>
+                    <td class="fill-col">2 + 18 = 20</td>
+                    <td class="threshold-yes">Yes</td>
+                    <td class="print-col">20 @ $56.00</td>
+                    <td class="time-col">10:20:02.310</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div id="explanation" class="explanation-box">
+            <div class="explanation-title">Row <span id="row-num"></span> Calculation</div>
+            <div id="explanation-content"></div>
+        </div>
+        
+        <div class="key-section">
+            <div class="key-title">Key:</div>
+            Each reference trade triggers real-time fill at actual reference price. Fills ≥20 shares report immediately. 
+            Fills &lt;20 shares accumulate until threshold reached. No time windows, no averaging.
+        </div>
+        
+        <div class="key-section" style="margin-top: 15px;">
+            <div class="key-title">LTR Mechanism:</div>
+            <strong>Liquidity Transfer Rate (LTR)</strong> determines fill size as percentage of reference trade volume. 
+            At 10% LTR, a 500-share reference trade executes a 50-share fill. PureStream supports LTR up to 3,000%, 
+            enabling participants to provide liquidity at multiples of reference volume.
+        </div>
+    </div>
+    
+    <script>
+        const rows = document.querySelectorAll('.flow-table tbody tr');
+        const explanationBox = document.getElementById('explanation');
+        const explanationContent = document.getElementById('explanation-content');
+        const rowNum = document.getElementById('row-num');
+        
+        const explanations = {
+            1: {
+                title: "Immediate Execution",
+                content: `
+                    <div class="calculation">
+                        Reference: 500 shares @ $56.00<br>
+                        LTR: 10%<br>
+                        Fill: 500 × 0.10 = <span class="highlight-value">50 shares</span>
+                    </div>
+                    <p>Fill size (50) exceeds 20-share threshold → Reports immediately to tape at $56.00</p>
+                    <p><strong>No price improvement, no delay.</strong> Execution occurs at the actual SIP reference price.</p>
+                `
+            },
+            2: {
+                title: "Immediate Execution",
+                content: `
+                    <div class="calculation">
+                        Reference: 400 shares @ $56.01<br>
+                        LTR: 10%<br>
+                        Fill: 400 × 0.10 = <span class="highlight-value">40 shares</span>
+                    </div>
+                    <p>Fill size (40) exceeds 20-share threshold → Reports immediately to tape at $56.01</p>
+                    <p>Price moves one cent, execution follows reference exactly.</p>
+                `
+            },
+            3: {
+                title: "Accumulation Mode",
+                content: `
+                    <div class="calculation">
+                        Reference: 180 shares @ $56.00<br>
+                        LTR: 10%<br>
+                        Fill: 180 × 0.10 = <span class="highlight-value">18 shares</span>
+                    </div>
+                    <p>Fill size (18) is BELOW 20-share threshold → <strong>Held in accumulation</strong></p>
+                    <p>No tape print yet. Waiting for next reference trade to reach threshold.</p>
+                    <p style="color: #ff8c00; font-style: italic;">Accumulated: 18 shares @ $56.00</p>
+                `
+            },
+            4: {
+                title: "Threshold Release",
+                content: `
+                    <div class="calculation">
+                        Reference: 20 shares @ $56.00<br>
+                        LTR: 10%<br>
+                        New fill: 20 × 0.10 = 2 shares<br>
+                        <span class="highlight-value">Accumulated: 18 shares</span><br>
+                        Total: 18 + 2 = <span class="highlight-value">20 shares</span>
+                    </div>
+                    <p>Combined total (20) reaches threshold → <strong>Release accumulated + new fill</strong></p>
+                    <p>All 20 shares print to tape at $56.00 (the reference price for both trades)</p>
+                    <p><strong>Result:</strong> No information leakage from sub-threshold orders until execution complete.</p>
+                `
+            }
+        };
+        
+        rows.forEach(row => {
+            row.addEventListener('click', function() {
+                // Remove active class from all rows
+                rows.forEach(r => r.classList.remove('active'));
+                
+                // Add active class to clicked row
+                this.classList.add('active');
+                
+                // Show explanation
+                const rowIndex = parseInt(this.dataset.row);
+                rowNum.textContent = rowIndex;
+                
+                if (explanations[rowIndex]) {
+                    explanationContent.innerHTML = explanations[rowIndex].content;
+                    explanationBox.classList.add('show');
+                    
+                    // Scroll to explanation
+                    setTimeout(() => {
+                        explanationBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
+            });
+        });
+        
+        // Auto-show first row explanation on load
+        setTimeout(() => {
+            rows[0].click();
+        }, 500);
+    </script>
+</body>
+</html>
